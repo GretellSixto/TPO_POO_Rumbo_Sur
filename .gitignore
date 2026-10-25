@@ -1,0 +1,19 @@
+# Compilación de Java (IntelliJ y Maven)
+*.class
+bin/
+target/
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Otros editores y sistema operativo
+.vscode/
+.settings/
+.project
+.classpath
+.DS_Store
+Thumbs.db
