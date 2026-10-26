@@ -1,7 +1,7 @@
 # Trabajo Práctico Obligatorio - Agencia de Turismo «Rumbo Sur»
 ## Etapa 1: Modelado y Aplicación de Patrones
 - **Curso:** Paradigma Orientado a Objetos
-- **Caso:** Propuesta B - Agencia de Turismo Receptivo Rumbo Sur
+- **Caso:** Propuesta B - Agencia de Turismo Rumbo Sur
 
 ---
 
