@@ -49,7 +49,7 @@ Al cerrar una salida finalizada, la liquidación del guía se calcula: Honorario
 
 ---
 
-#2. Registro de Supuestos Adoptados (SUP)
+# 2. Registro de Supuestos Adoptados (SUP)
 
 ### SUP01
 - **Ambigüedad:** El enunciado no especifica si la edad para tours de aventura y categorías se evalúa a la fecha de reserva o de inicio de la salida.
