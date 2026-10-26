@@ -1,9 +1,5 @@
 # Sistema de Gestión «Rumbo Sur»
-## Diagrama de Casos de Uso
-<img width="779" height="533" alt="casos_de_uso_rumbo_sur" src="https://github.com/user-attachments/assets/1b32f06a-a852-439d-aef9-b0b44370a65f" />
-
-## Descripciones
-
+## Descripción de Diagrama de Casos de Uso
 ### CU01 — Crear Reserva
 - **Actor:** Cliente.
 - **Precondición:** Cliente titular registrado y salida «Programada» con cupo disponible.
