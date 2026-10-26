@@ -1,0 +1,96 @@
+@startuml
+title Diagrama de Casos de Uso - Sistema de Gestión «Rumbo Sur»
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+' Actores del Sector Izquierdo
+actor "Cliente" as Cliente
+actor "Vendedor" as Vendedor
+actor "Temporizador" as Temporizador
+
+rectangle "Sistema de Gestión - Rumbo Sur" {
+  ' Casos de Uso del Sector Izquierdo (Comercial, Reservas y Pasajeros)
+  usecase "CU01 — Crear Reserva" as CU01
+  usecase "Validar Cupo Disponible" as UC_ValidarCupo
+  usecase "Calcular Precio de Reserva" as UC_CalcularPrecio
+  usecase "Evaluar Promociones" as UC_EvaluarPromociones
+  usecase "Contratar Servicios Adicionales" as UC_Adicionales
+
+  usecase "CU02 — Registrar Pago de Reserva" as CU02
+  usecase "Aplicar Recargo Tarjeta en Cuotas (7%)" as UC_RecargoTarjeta
+  usecase "Confirmar Reserva (Seña ≥30%)" as UC_ConfirmarReserva
+
+  usecase "CU03 — Cancelar Reserva" as CU03
+  usecase "Calcular Reintegro por Anticipación" as UC_CalcularReintegro
+  usecase "Emitir Nota de Ajuste" as UC_EmitirNotaAjuste
+  usecase "Control Vencimientos" as UC_ControlVencimientos
+
+  ' Casos de Uso del Sector Derecho (Operaciones, Recursos y Administración)
+  usecase "Administrar Catálogo de Tours" as UC_AdministrarCatalogo
+  usecase "Programar Salida de Tour" as UC_ProgramarSalida
+  usecase "Emitir Reportes Gerenciales" as UC_EmitirReportes
+
+  usecase "CU04 — Asignar Guía y Vehículo a Salida" as CU04
+  usecase "CU-13: Validar Habilitación y Disponibilidad Guía" as CU13
+  usecase "CU-14: Validar Capacidad de Asientos Vehículo" as CU14
+
+  usecase "CU05 — Iniciar Salida" as CU05
+  usecase "Emitir Lista Oficial de Pasajeros (RN-14)" as UC_EmitirLista
+
+  usecase "CU06 — Cerrar Salida y Liquidar Honorarios a Guías" as CU06
+  usecase "Liquidar Comisión 5% por Adicionales" as UC_LiquidarComision
+}
+
+' Actores del Sector Derecho
+actor "Administrador" as Admin
+actor "Coordinador de Operaciones" as Coordinador
+actor "Guía de Turismo" as Guia
+
+' Conexiones de Actores del Lado Izquierdo
+Cliente --> CU01
+Cliente --> CU02
+Cliente --> CU03
+Vendedor --> CU01
+Vendedor --> CU02
+Vendedor --> CU03
+Temporizador --> UC_ControlVencimientos
+
+' Relaciones del Lado Izquierdo (Include y Extend)
+' CU01 — Crear Reserva
+CU01 ..> UC_ValidarCupo : <<include>>
+CU01 ..> UC_CalcularPrecio : <<include>>
+UC_EvaluarPromociones ..> CU01 : <<extend>>
+UC_Adicionales ..> CU01 : <<extend>>
+
+' CU02 — Registrar Pago de Reserva
+UC_RecargoTarjeta ..> CU02 : <<extend>>
+UC_ConfirmarReserva ..> CU02 : <<extend>>
+
+' CU03 — Cancelar Reserva
+CU03 ..> UC_CalcularReintegro : <<include>>
+CU03 ..> UC_EmitirNotaAjuste : <<include>>
+UC_ControlVencimientos ..> CU03 : <<include>>\n(10 días sin saldo)
+
+' Conexiones de Actores del Lado Derecho
+Admin --> UC_AdministrarCatalogo
+Admin --> UC_ProgramarSalida
+Admin --> UC_EmitirReportes
+Coordinador --> UC_ProgramarSalida
+Coordinador --> CU04
+Coordinador --> CU05
+Coordinador --> CU06
+Guia <-- UC_EmitirLista : recibe lista oficial
+Guia <-- CU06 : percibe liquidación
+
+' Relaciones del Lado Derecho (Include)
+' CU04 — Asignar Guía y Vehículo a Salida
+CU04 ..> CU13 : <<include>>
+CU04 ..> CU14 : <<include>>
+
+' CU05 — Iniciar Salida
+CU05 ..> UC_EmitirLista : <<include>>
+
+' CU06 — Cerrar Salida y Liquidar Honorarios
+CU06 ..> UC_LiquidarComision : <<include>>
+@enduml
