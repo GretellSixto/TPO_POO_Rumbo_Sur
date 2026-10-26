@@ -1,71 +1,37 @@
 # Requerimientos Funcionales - Agencia Rumbo Sur
 
-## RF01. Administración de Catálogo de Tours
-- **Actor Principal:** Administrador
-- **Prioridad:** Alta
-- **Descripción:** El sistema debe permitir dar de alta, modificar y consultar tours con su código, nombre, descripción, duración en días, categoría (aventura, cultural, naturaleza), itinerario por actividades y cupos mín/máx.
+## RF01. El sistema debe permitir dar de alta, modificar y consultar tours con su código, nombre, descripción, duración en días, categoría (Aventura, Cultural, Naturaleza), cupo mínimo y máximo.
 
-## RF02. Gestión de Tarifas por Temporada
-- **Actor Principal:** Administrador
-- **Prioridad:** Alta
-- **Descripción:** Permitir fijar tarifas base por persona para cada tour según temporada (baja, media, alta) con su período de vigencia.
+## RF02. El sistema debe permitir definir el itinerario de cada tour compuesto por actividades ordenadas por día, horario, lugar, descripción y asociadas a proveedores de servicios de terceros (alojamiento, comidas, traslados) con su CUIT y datos de contacto.
 
-## RF03. Programación de Salidas
-- **Actor Principal:** Coordinador de Operaciones
-- **Prioridad:** Alta
-- **Descripción:** Programar salidas concretas para un tour indicando fecha de inicio, fecha de fin, cupo máximo, guía habilitado y vehículo disponible.
+## RF03. El sistema debe registrar las tarifas base de cada tour según la temporada (Baja, Media, Alta), con sus respectivas fechas de vigencia.
 
-## RF04. Registro de Clientes y Creación de Reservas
-- **Actor Principal:** Vendedor
-- **Prioridad:** Alta
-- **Descripción:** Registrar datos del cliente titular e iniciar una reserva para una salida determinada, incluyendo uno o más pasajeros.
+## RF04. El sistema debe permitir al coordinador crear salidas concretas para un tour con fecha de inicio, fecha de fin y estado inicial 'Programada'.
 
-## RF05. Cálculo Automático de Precios y Promociones
-- **Actor Principal:** Sistema
-- **Prioridad:** Alta
-- **Descripción:** Calcular el total de la reserva según la tarifa de temporada del tour, tipo de pasajero (Adulto 100%, Menor <12 60%, Menor <3 gratis, Jubilado 10% desc), y aplicar la mejor promoción no acumulable (Reserva anticipada >60 días 15% o Grupo >=6 pax 10%).
+## RF05. El sistema debe validar que el guía asignado esté habilitado para la categoría del tour, no tenga salidas superpuestas en el mismo período, y que la capacidad del vehículo asignado no sea menor al cupo máximo de la salida.
 
-## RF06. Contratación de Servicios Adicionales
-- **Actor Principal:** Vendedor / Cliente
-- **Prioridad:** Alta
-- **Descripción:** Permitir asociar servicios adicionales (traslados, excursiones opcionales, seguro de viaje) a cada pasajero. Validar que el seguro de viaje es obligatorio si el tour es de aventura.
+## RF06. El sistema debe permitir registrar y consultar clientes con nombre, apellido, documento, teléfono, correo electrónico y país de residencia.
 
-## RF07. Registro de Pagos y Confirmación de Reserva
-- **Actor Principal:** Vendedor
-- **Prioridad:** Alta
-- **Descripción:** Registrar la seña obligatoria del 30% para pasar la reserva a estado "Confirmada", y registrar pagos posteriores del saldo (hasta 10 días antes de la salida). Aplicar recargo del 7% si el pago es en cuotas con tarjeta.
+## RF07. El sistema debe permitir armar una reserva para una salida específica asignada a un vendedor, registrando los datos de cada pasajero (nombre, DNI, fecha de nacimiento, tipo de pasajero, contacto de emergencia y restricciones de salud/alimentarias).
 
-## RF08. Cancelación de Reserva y Reembolso Escalonado
-- **Actor Principal:** Vendedor / Cliente
-- **Prioridad:** Alta
-- **Descripción:** Cancelar una reserva registrando fecha y motivo, calculando la devolución automática según política de días (>=30d: 90%, 29-15d: 50%, 14-7d: 20%, <7d: 0%; 100% si cancela la agencia) por el mismo medio de pago.
+## RF08. El sistema debe calcular el precio de la reserva sumando las tarifas individuales por tipo de pasajero (Adulto: 100%, Menor < 12 años: 60%, Menor < 3 años: 0%, Jubilado: 90%) sobre la tarifa base de la temporada.
 
-## RF09. Reemplazo de Pasajeros
-- **Actor Principal:** Vendedor
-- **Prioridad:** Media
-- **Descripción:** Permitir reemplazar un pasajero de la reserva por otro hasta 3 días antes de la fecha de salida sin costo adicional, verificando que cumpla las condiciones (edad mínima en aventura).
+## RF09. El sistema debe evaluar automáticamente si corresponde 'Reserva Anticipada' (15% con más de 60 días) o 'Grupo' (10% con 6 o más pasajeros), aplicando únicamente la más conveniente para el cliente.
 
-## RF10. Control de Cupo y Confirmación/Cancelación de Salida
-- **Actor Principal:** Sistema / Coordinador
-- **Prioridad:** Alta
-- **Descripción:** Monitorear cupo de salida: pasa a "Confirmada" al alcanzar cupo mínimo; pasa a "Completa" al llegar al cupo máximo. Si a 7 días de la salida no alcanza cupo mínimo, cancela la salida y reembolsa 100% a clientes.
+## RF10. El sistema debe permitir contratar servicios adicionales (opcionales u obligatorios como el seguro en tours de aventura) sumando su costo al total por pasajero.
 
-## RF11. Emisión de Lista Oficial de Pasajeros
-- **Actor Principal:** Coordinador de Operaciones
-- **Prioridad:** Alta
-- **Descripción:** Generar la lista obligatoria de pasajeros previa a la partida de la salida con documento, contacto de emergencia y restricciones alimentarias o de salud.
+## RF11. El sistema debe registrar pagos parciales y confirmar la reserva cuando se abone al menos el 30% del total en concepto de seña.
 
-## RF12. Cierre de Salida y Liquidación de Guías
-- **Actor Principal:** Coordinador / Administrador
-- **Prioridad:** Alta
-- **Descripción:** Cerrar la salida finalizada y calcular la liquidación del guía asignado: honorario fijo por día * duración en días + 5% del valor total de adicionales vendidos en esa salida.
+## RF12. El sistema debe verificar que el saldo total se cancele hasta 10 días antes de la salida; de lo contrario, debe anular la reserva y reintegrar los cupos a la salida.
 
-## RF13. Generación de Reportes Gerenciales
-- **Actor Principal:** Administrador
-- **Prioridad:** Media
-- **Descripción:** Generar reportes analíticos de: ocupación por salida, ventas y comisiones por vendedor, ingresos desglosados por tour y estadísticas de cancelaciones/reembolsos.
+## RF13. El sistema debe confirmar una salida cuando alcance su cupo mínimo, marcarla como 'Completa' al alcanzar su cupo máximo, y cancelarla con devolución del 100% si a 7 días de la fecha no llega al mínimo.
 
-## RF14. Gestión de Notas de Ajuste
-- **Actor Principal:** Sistema
-- **Prioridad:** Media
-- **Descripción:** Asegurar que ninguna reserva que haya tenido pagos registrados pueda ser eliminada físicamente de la base de datos; cualquier diferencia económica o cancelación debe registrarse como nota de ajuste contable.
+## RF14. El sistema debe permitir cancelar reservas aplicando el porcentaje de devolución según la anticipación (>30d: 90%, 29-15d: 50%, 14-7d: 20%, <7d: 0%) o 100% si la cancelación es de la agencia, generando una Nota de Ajuste.
+
+## RF15. El sistema debe permitir sustituir un pasajero por otro hasta 3 días antes de la salida sin costo adicional, verificando aptitud según la categoría del tour.
+
+## RF16. El sistema debe generar la lista de pasajeros con DNI, contacto de emergencia y restricciones alimentarias/médicas para entregar al guía antes de iniciar la salida.
+
+## RF17. El sistema debe al finalizar la salida, el coordinador debe cerrarla y el sistema debe liquidar los honorarios del guía calculando: (Días trabajados * Valor honorario por día) + (5% del total de adicionales vendidos en esa salida).
+
+## RF18. El sistema debe emitir reportes de ocupación por salida, ventas por vendedor, ingresos generados por tour y estadísticas de cancelaciones.
