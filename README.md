@@ -10,7 +10,7 @@
 
 ---
 
-### Estructura del Repositorio (Pautas de Cátedra)
+### Estructura del Repositorio
 - `/docs/`: Análisis de enunciado, actores, requerimientos funcionales, reglas de negocio, supuestos y justificación de patrones.
 - `/docs/uml/`: Archivos fuente PlantUML (.puml) e imágenes exportadas de los diagramas.
 - `/src/`: Implementación del modelo de dominio en Java 17+.
