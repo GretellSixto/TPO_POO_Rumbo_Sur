@@ -1,7 +1,6 @@
 # Sistema de Gestión «Rumbo Sur»
 ## Diagrama de Casos de Uso
-
-![Diagrama de casos de uso Rumbo Sur](casos_de_uso_rumbo_sur.png)
+<img width="779" height="533" alt="casos_de_uso_rumbo_sur" src="https://github.com/user-attachments/assets/1b32f06a-a852-439d-aef9-b0b44370a65f" />
 
 ## Descripciones
 
