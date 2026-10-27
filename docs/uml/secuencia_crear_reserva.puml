@@ -1,0 +1,65 @@
+@startuml
+autonumber
+actor ":Vendedor" as Vendedor
+boundary ":InterfazReserva" as UI
+control ":ControladorReserva" as Ctrl
+entity "salida:Salida" as Salida
+entity "tour:Tour" as Tour
+entity "reserva:Reserva" as Reserva
+
+Vendedor -> UI: solicitarCrearReserva(idSalida, dniCliente, listaPasajeros)
+activate UI
+UI -> Ctrl: procesarAltaReserva(idSalida, dniCliente, listaPasajeros)
+activate Ctrl
+
+Ctrl -> Salida: hayCupoDisponible(cantidadPasajeros)
+activate Salida
+Salida --> Ctrl: cupoOk
+deactivate Salida
+
+alt cupoOk == false
+    Ctrl --> UI: error("Cupo insuficiente en la salida")
+    UI --> Vendedor: notificar("No hay plazas disponibles")
+else cupoOk == true
+    Ctrl -> Salida: getTour()
+    activate Salida
+    Salida --> Ctrl: tour
+    deactivate Salida
+
+    loop cada pasajero en lista
+        Ctrl -> Tour: validarAptitud(pasajero, fechaSalida)
+        activate Tour
+        Tour --> Ctrl: esApto
+        deactivate Tour
+    end
+
+    alt algun pasajero no cumple aptitud
+        Ctrl --> UI: error("Pasajero no cumple edad mínima")
+        UI --> Vendedor: notificar("Rechazo: restricción de edad")
+    else todos los pasajeros son aptos
+        create Reserva
+        Ctrl -> Reserva: new(cliente, salida, vendedor)
+        
+        loop cada pasajero
+            Ctrl -> Reserva: agregarPasajero(pasajero)
+            activate Reserva
+            deactivate Reserva
+        end
+
+        Ctrl -> Salida: reservarLugares(cantidadPasajeros)
+        activate Salida
+        Salida --> Ctrl: confirmacionCupo
+        deactivate Salida
+
+        Ctrl -> Reserva: calcularTotal()
+        activate Reserva
+        Reserva --> Ctrl: total
+        deactivate Reserva
+
+        Ctrl --> UI: reservaGenerada(nroReserva, total, señaRequerida)
+        UI --> Vendedor: mostrarComprobanteYSeña(30%)
+    end
+end
+deactivate Ctrl
+deactivate UI
+@enduml
