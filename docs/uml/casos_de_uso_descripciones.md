@@ -5,8 +5,8 @@
 - **Precondición:** Cliente titular registrado y salida «Programada» con cupo disponible.
 - **Flujo principal:**
   * El vendedor ingresa el DNI del titular y selecciona la salida del catálogo.
-  * El sistema valida cupo disponible (<<include>> ) e ingresa a los pasajeros.
-  * El sistema calcula precio (<<include>>) y evalúa promociones (<<extend>>).
+  * El sistema valida cupo disponible e ingresa a los pasajeros.
+  * El sistema calcula precio y evalúa promociones.
   * Guarda la reserva como «Pendiente», bloquea cupos y solicita seña del 30%.
 - **Flujos alternativos:**
   * Cupo insuficiente: El sistema advierte falta de plazas y cancela la operación.
