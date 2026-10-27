@@ -24,7 +24,9 @@
 **- Problema en el diseño inicial:** Si Tour obligaba a pedir una edadMinima a todas las categorías, las subclases TourCultural y TourNaturaleza debían lanzar excepciones del tipo UnsupportedOperationException o retornar valores artificiales, rompiendo el contrato de la clase padre.
 
 **- Decisión tomada:** Se diseñó el método polimórfico validarAptitud(Pasajero p, LocalDate fecha) en la clase abstracta Tour. Las subclases TourCultural y TourNaturaleza devuelven coherentemente true respetando la firma y la semántica, mientras que TourAventura aplica la restricción de edad mínima sin sorpresas para el código cliente.
+
 **- Clases donde se refleja:** Tour, TourAventura, TourCultural, TourNaturaleza.
+
 **- Ventaja aportada:** Cualquier cliente que invoque tour.validarAptitud(...) puede operar con cualquier tipo derivado de Tour sin tener que consultar su clase concreta mediante instanceof.
 
 ## PATRONES GRASP 
