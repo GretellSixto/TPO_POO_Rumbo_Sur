@@ -58,8 +58,10 @@ El modelo inicial de la agencia «Rumbo Sur» modela utilizando tipos primitivos
 + @Override validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean (Siempre retorna true)
 
 ## Salida:
-**- Atributos:** - fechaInicio: LocalDate, - fechaFin: LocalDate, - cupoMaximo: int, - estado: EstadoSalida (Enum: PROGRAMADA, CONFIRMADA, COMPLETA, EN_CURSO, FINALIZADA, CANCELADA)
-**- Métodos:** + asignarGuia(guia: Guia): void, + asignarVehiculo(vehiculo: Vehiculo): void, + hayCupoDisponible(cantidad: int): boolean, + cerrarSalida(): void
+**Atributos:** 
+- fechaInicio: LocalDate, - fechaFin: LocalDate, - cupoMaximo: int, - estado: EstadoSalida (Enum: PROGRAMADA, CONFIRMADA, COMPLETA, EN_CURSO, FINALIZADA, CANCELADA)
+**Métodos:** 
++ asignarGuia(guia: Guia): void, + asignarVehiculo(vehiculo: Vehiculo): void, + hayCupoDisponible(cantidad: int): boolean, + cerrarSalida(): void
 
 ## Reserva:
 **Atributos:**
@@ -86,6 +88,7 @@ El modelo inicial de la agencia «Rumbo Sur» modela utilizando tipos primitivos
 + getImporte(): double
 
 # RELACIONES Y MULTIPLICIDADES
+
 **Generalización / Herencia:** 
 Persona es superclase de Cliente, Vendedor y Guia. Tour es superclase abstracta de TourAventura, TourCultural y TourNaturaleza.
 
