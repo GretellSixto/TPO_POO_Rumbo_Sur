@@ -1,0 +1,59 @@
+@startuml
+autonumber
+actor ":Vendedor" as Vendedor
+boundary ":InterfazReserva" as UI
+control ":ControladorCancelacion" as Ctrl
+entity "reserva:Reserva" as Reserva
+entity "salida:Salida" as Salida
+entity "notaAjuste:NotaDeAjuste" as Nota
+
+Vendedor -> UI: cancelarReserva(nroReserva, motivo)
+activate UI
+UI -> Ctrl: procesarCancelacion(nroReserva, motivo)
+activate Ctrl
+
+Ctrl -> Reserva: getSalida()
+activate Reserva
+Reserva --> Ctrl: salida
+deactivate Reserva
+
+Ctrl -> Salida: getDiasParaInicio(hoy)
+activate Salida
+Salida --> Ctrl: diasRestantes
+deactivate Salida
+
+Ctrl -> Reserva: getTotalAbonado()
+activate Reserva
+Reserva --> Ctrl: totalAbonado
+deactivate Reserva
+
+alt diasRestantes >= 30
+    note over Ctrl: reintegro = totalAbonado * 0.90
+else diasRestantes >= 15 y diasRestantes < 30
+    note over Ctrl: reintegro = totalAbonado * 0.50
+else diasRestantes >= 7 y diasRestantes < 15
+    note over Ctrl: reintegro = totalAbonado * 0.20
+else diasRestantes < 7
+    note over Ctrl: reintegro = 0.00
+end
+
+create Nota
+Ctrl -> Nota: new(nroReserva, hoy, reintegro, motivo)
+activate Nota
+Nota --> Ctrl: notaCreada
+deactivate Nota
+
+Ctrl -> Reserva: setEstado(ANULADA)
+activate Reserva
+deactivate Reserva
+
+Ctrl -> Salida: liberarLugares(cantidadPasajeros)
+activate Salida
+Salida --> Ctrl: cuposLiberados
+deactivate Salida
+
+Ctrl --> UI: confirmacion(notaAjuste)
+deactivate Ctrl
+UI --> Vendedor: emitirNotaDeAjuste(montoDevuelto)
+deactivate UI
+@enduml
