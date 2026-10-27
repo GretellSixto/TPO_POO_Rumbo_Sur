@@ -1,0 +1,175 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+enum EstadoSalida {
+  PROGRAMADA
+  CONFIRMADA
+  COMPLETA
+  EN_CURSO
+  FINALIZADA
+  CANCELADA
+}
+
+enum EstadoReserva {
+  PENDIENTE
+  CONFIRMADA
+  ANULADA
+  FINALIZADA
+}
+
+enum TipoPasajero {
+  ADULTO
+  MENOR_12
+  MENOR_3
+  JUBILADO
+  - factorTarifa: double
+  + getFactorTarifa(): double
+}
+
+abstract class Persona {
+  # legajo: String
+  # nombre: String
+  # documento: String
+  # telefono: String
+  + getDocumento(): String
+  + getNombre(): String
+}
+
+class Cliente extends Persona {
+  - apellido: String
+  - correo: String
+  - paisResidencia: String
+  + getNombreCompleto(): String
+}
+
+class Vendedor extends Persona {
+  - comisionPorcentaje: double
+  + getComisionPorcentaje(): double
+}
+
+class Guia extends Persona {
+  - idiomas: List<String>
+  - categoriasHabilitadas: List<String>
+  - honorarioPorDia: double
+  + estaHabilitadoPara(cat: String): boolean
+  + getHonorarioPorDia(): double
+}
+
+abstract class Tour {
+  # codigo: String
+  # nombre: String
+  # duracionDias: int
+  # cupoMinimo: int
+  # cupoMaximo: int
+  + {abstract} validarAptitud(p: Pasajero, fecha: LocalDate): boolean
+  + getDuracionDias(): int
+}
+
+class TourAventura extends Tour {
+  - edadMinima: int
+  - dificultad: String
+  + validarAptitud(p: Pasajero, fecha: LocalDate): boolean
+}
+
+class TourCultural extends Tour {
+  - sitiosHistoricos: List<String>
+  + validarAptitud(p: Pasajero, fecha: LocalDate): boolean
+}
+
+class TourNaturaleza extends Tour {
+  - parqueNacional: String
+  + validarAptitud(p: Pasajero, fecha: LocalDate): boolean
+}
+
+interface EstrategiaPromocion {
+  + calcularDescuento(r: Reserva): double
+}
+
+class PromocionAnticipada implements EstrategiaPromocion {
+  + calcularDescuento(r: Reserva): double
+}
+
+class PromocionGrupo implements EstrategiaPromocion {
+  + calcularDescuento(r: Reserva): double
+}
+
+class CalculadoraPrecios {
+  + calcularPrecioFinal(r: Reserva, promo: EstrategiaPromocion): double
+}
+
+class ControladorReserva {
+  + procesarAltaReserva(idSalida: String, dni: String): void
+  + procesarPago(monto: double, medio: String): void
+}
+
+class Salida {
+  - idSalida: String
+  - fechaInicio: LocalDate
+  - fechaFin: LocalDate
+  - estado: EstadoSalida
+  - cupoMaximo: int
+  + hayCupoDisponible(cant: int): boolean
+  + reservarLugares(cant: int): void
+  + liberarLugares(cant: int): void
+}
+
+class Reserva {
+  - numero: long
+  - fecha: LocalDate
+  - estado: EstadoReserva
+  - total: double
+  + agregarPasajero(p: Pasajero): void
+  + registrarPago(monto: double, medio: String): void
+  + getTotalAbonado(): double
+  + getSaldoPendiente(): double
+}
+
+class Pasajero {
+  - nombre: String
+  - documento: String
+  - fechaNacimiento: LocalDate
+  - tipo: TipoPasajero
+  - contactoEmergencia: String
+  + calcularEdad(fechaRef: LocalDate): int
+  + getTipo(): TipoPasajero
+}
+
+class NotaDeAjuste <<final>> {
+  - nroReserva: long
+  - fecha: LocalDate
+  - importeDevuelto: double
+  - motivo: String
+  + getImporteDevuelto(): double
+}
+
+class Vehiculo {
+  - patente: String
+  - capacidad: int
+  - tipo: String
+}
+
+class Pago {
+  - idTransaccion: String
+  - fecha: LocalDate
+  - importe: double
+  - medio: String
+}
+
+ControladorReserva --> Salida
+ControladorReserva --> Reserva
+ControladorReserva --> CalculadoraPrecios
+CalculadoraPrecios --> EstrategiaPromocion
+
+Salida "0..*" --> "1" Tour : corresponde a
+Salida "0..*" o-- "0..1" Guia : asigna
+Salida "0..*" o-- "0..1" Vehiculo : asigna
+
+Cliente "1" <-- "0..*" Reserva : es titular
+Vendedor "1" <-- "0..*" Reserva : confecciona
+Reserva "0..*" --> "1" Salida : reserva en
+Reserva "1" *-- "1..*" Pasajero : incluye
+Reserva "1" *-- "0..*" Pago : registra
+Reserva "1" *-- "0..*" NotaDeAjuste : emite
+
+Pasajero --> TipoPasajero
+@enduml

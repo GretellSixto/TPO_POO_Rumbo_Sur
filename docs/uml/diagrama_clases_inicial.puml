@@ -1,0 +1,153 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Persona {
+  # legajo: String
+  # nombre: String
+  # documento: String
+  # telefono: String
+  + Persona(legajo: String, nombre: String, documento: String, telefono: String)
+  + getDocumento(): String
+  + getNombre(): String
+  + getTelefono(): String
+}
+
+class Cliente extends Persona {
+  - apellido: String
+  - correo: String
+  - paisResidencia: String
+  + Cliente(legajo: String, nombre: String, documento: String, telefono: String, apellido: String, correo: String, pais: String)
+  + getApellido(): String
+  + getCorreo(): String
+  + getNombreCompleto(): String
+}
+
+class Vendedor extends Persona {
+  - comisionPorcentaje: double
+  + Vendedor(legajo: String, nombre: String, documento: String, telefono: String, comision: double)
+  + getComisionPorcentaje(): double
+}
+
+class Guia extends Persona {
+  - idiomas: List<String>
+  - categoriasHabilitadas: List<String>
+  - honorarioPorDia: double
+  + Guia(legajo: String, nombre: String, documento: String, telefono: String, honorario: double)
+  + estaHabilitadoPara(cat: String): boolean
+  + getHonorarioPorDia(): double
+}
+
+abstract class Tour {
+  # codigo: String
+  # nombre: String
+  # descripcion: String
+  # duracionDias: int
+  # cupoMinimo: int
+  # cupoMaximo: int
+  + Tour(codigo: String, nombre: String, desc: String, duracion: int, min: int, max: int)
+  + {abstract} validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean
+  + getDuracionDias(): int
+  + getCupoMinimo(): int
+  + getCupoMaximo(): int
+  + getCodigo(): String
+}
+
+class TourAventura extends Tour {
+  - edadMinima: int
+  - nivelDificultad: String
+  + TourAventura(codigo: String, nombre: String, desc: String, duracion: int, min: int, max: int, edadMin: int, dif: String)
+  + validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean
+}
+
+class TourCultural extends Tour {
+  - sitiosHistoricos: List<String>
+  + TourCultural(codigo: String, nombre: String, desc: String, duracion: int, min: int, max: int)
+  + validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean
+}
+
+class TourNaturaleza extends Tour {
+  - parqueNacional: String
+  + TourNaturaleza(codigo: String, nombre: String, desc: String, duracion: int, min: int, max: int, parque: String)
+  + validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean
+}
+
+class Salida {
+  - idSalida: String
+  - fechaInicio: LocalDate
+  - fechaFin: LocalDate
+  - cupoMaximo: int
+  - estado: String
+  + Salida(idSalida: String, fechaInicio: LocalDate, fechaFin: LocalDate, cupoMax: int)
+  + asignarGuia(guia: Guia): void
+  + asignarVehiculo(vehiculo: Vehiculo): void
+  + hayCupoDisponible(cantidad: int): boolean
+  + reservarLugares(cantidad: int): void
+  + liberarLugares(cantidad: int): void
+  + cerrarSalida(): void
+}
+
+class Vehiculo {
+  - patente: String
+  - capacidad: int
+  - tipo: String
+  + Vehiculo(patente: String, capacidad: int, tipo: String)
+  + getCapacidad(): int
+  + getPatente(): String
+}
+
+class Reserva {
+  - numero: long
+  - fecha: LocalDate
+  - estado: String
+  - total: double
+  + Reserva(numero: long, fecha: LocalDate)
+  + agregarPasajero(p: Pasajero): void
+  + calcularTotal(): double
+  + registrarPago(monto: double, medio: String): void
+  + getTotalAbonado(): double
+  + getSaldoPendiente(): double
+  + cancelarReserva(motivo: String): void
+}
+
+class Pasajero {
+  - nombre: String
+  - documento: String
+  - fechaNacimiento: LocalDate
+  - tipo: String
+  - contactoEmergencia: String
+  - restriccionesSalud: String
+  + Pasajero(nombre: String, doc: String, fnac: LocalDate, tipo: String, cont: String, rest: String)
+  + calcularEdad(fechaRef: LocalDate): int
+  + getTipo(): String
+  + getDocumento(): String
+}
+
+class Pago {
+  - idTransaccion: String
+  - fecha: LocalDate
+  - importe: double
+  - medio: String
+  + Pago(id: String, fecha: LocalDate, importe: double, medio: String)
+  + getImporte(): double
+  + getMedio(): String
+}
+
+class ServicioAdicional {
+  - nombre: String
+  - precio: double
+  - obligatorio: boolean
+  + ServicioAdicional(nombre: String, precio: double, obligatorio: boolean)
+  + getPrecio(): double
+  + isObligatorio(): boolean
+}
+
+Salida "0..*" --> "1" Tour : corresponde a
+Salida "0..*" o-- "0..1" Guia : asigna
+Salida "0..*" o-- "0..1" Vehiculo : asigna
+Cliente "1" <-- "0..*" Reserva : es titular
+Vendedor "1" <-- "0..*" Reserva : confecciona
+Reserva "0..*" --> "1" Salida : reserva en
+Reserva "1" *-- "1..*" Pasajero : incluye
+Reserva "1" *-- "0..*" Pago : registra
+Reserva "0..*" o-- "0..*" ServicioAdicional : contrata
+@enduml
