@@ -4,88 +4,74 @@
 El modelo inicial de la agencia «Rumbo Sur» se modela utilizando tipos primitivos y enumerados de Java. Se aplican modificadores de acceso UML: privado (-) para los atributos y público (+) o protegido (#) para los métodos y constructores.
 
 ## 1. Persona (Clase Abstracta base de personal y clientes):
-**Atributos:** 
-# legajo: String, # nombre: String, # documento: String, # telefono: String
-**Métodos:**
-+ Persona(legajo: String, nombre: String, documento: String, telefono: String), + getDocumento(): String, + getNombre(): String, + getTelefono(): String
+**Atributos:** # legajo: String, # nombre: String, # documento: String, # telefono: String
+
+**Métodos:** + Persona(legajo: String, nombre: String, documento: String, telefono: String), + getDocumento(): String, + getNombre(): String, + getTelefono(): String
 
 ## 2. Cliente (hereda de Persona):
-**Atributos:**
-- apellido: String, - correo: String, - paisResidencia: String
-**Métodos:**
-+ Cliente(...), + getApellido(): String, + getCorreo(): String, + getNombreCompleto(): String
+**Atributos:** - apellido: String, - correo: String, - paisResidencia: String
+  
+**Métodos:** + Cliente(...), + getApellido(): String, + getCorreo(): String, + getNombreCompleto(): String
 
 ## 3. Vendedor (hereda de Persona):
-**Atributos:** 
-- comisionPorcentaje: double
-**Métodos:**
-+ Vendedor(...), + getComisionPorcentaje(): double
+**Atributos:** - comisionPorcentaje: double
+  
+**Métodos:** + Vendedor(...), + getComisionPorcentaje(): double
 
 ## 4. Guia (hereda de Persona):
-**Atributos:**
-- idiomas: List<String>, - categoriasHabilitadas: List<CategoriaTour>, - honorarioPorDia: double
-**Métodos:**
-+ estaHabilitadoPara(cat: CategoriaTour): boolean, + getHonorarioPorDia(): double
+**Atributos:** - idiomas: List<String>, - categoriasHabilitadas: List<CategoriaTour>, - honorarioPorDia: double
+  
+**Métodos:** + estaHabilitadoPara(cat: CategoriaTour): boolean, + getHonorarioPorDia(): double
 
 ## 5. Vehiculo:
-**Atributos:** 
-- patente: String, - capacidad: int, - tipo: TipoVehiculo
-**Métodos:**
-+ Vehiculo(patente: String, capacidad: int, tipo: TipoVehiculo), + getCapacidad(): int, + getPatente(): String
+**Atributos:** - patente: String, - capacidad: int, - tipo: TipoVehiculo
+  
+**Métodos:** + Vehiculo(patente: String, capacidad: int, tipo: TipoVehiculo), + getCapacidad(): int, + getPatente(): String
 
 ## 6. Tour (Clase Abstracta):
-**Atributos:**
-# codigo: String, # nombre: String, # descripcion: String, # duracionDias: int, # cupoMinimo: int, # cupoMaximo: int
-**Métodos:**
-+ Tour(...), + {abstract} validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean, + getDuracionDias(): int, + getCupoMinimo(): int, + getCupoMaximo(): int, + getCodigo(): String
+**Atributos:** # codigo: String, # nombre: String, # descripcion: String, # duracionDias: int, # cupoMinimo: int, # cupoMaximo: int
+
+**Métodos:** + Tour(...), + {abstract} validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean, + getDuracionDias(): int, + getCupoMinimo(): int, + getCupoMaximo(): int, + getCodigo(): String
 
 ## 7. TourAventura (subclase de Tour):
-**Atributos:**
-- edadMinima: int, - nivelDificultad: String
-**Métodos:**
-+ @Override validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean (Evalúa según SUP01 que la edad del pasajero a la fecha de inicio sea ≥ edadMinima)
+**Atributos:** - edadMinima: int, - nivelDificultad: String
+
+**Métodos:** + @Override validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean (Evalúa según SUP01 que la edad del pasajero a la fecha de inicio sea ≥ edadMinima)
 
 ## 8. TourCultural (subclase de Tour):
-**Atributos:**
-- sitiosHistoricos: List<String>
-**Métodos:**
-+ @Override validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean (Retorna true: apto para todas las edades)
+**Atributos:** - sitiosHistoricos: List<String>
+
+**Métodos:** + @Override validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean (Retorna true: apto para todas las edades)
 
 ## 9. TourNaturaleza (subclase de Tour):
-**Atributos:** 
-- parqueNacional: String
-**Métodos:**
-+ @Override validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean (Retorna true: apto para todas las edades)
+**Atributos:** - parqueNacional: String
+
+**Métodos:** + @Override validarAptitud(pasajero: Pasajero, fechaSalida: LocalDate): boolean (Retorna true: apto para todas las edades)
 
 ## 10. Salida:
-**Atributos:** 
-- idSalida: String, - fechaInicio: LocalDate, - fechaFin: LocalDate, - cupoMaximo: int, - estado: EstadoSalida
-**Métodos:** 
-+ asignarGuia(guia: Guia): void, + asignarVehiculo(vehiculo: Vehiculo): void, + hayCupoDisponible(cantidad: int): boolean, + reservarLugares(cantidad: int): void, + liberarLugares(cantidad: int): void, + cerrarSalida(): void
+**Atributos:** - idSalida: String, - fechaInicio: LocalDate, - fechaFin: LocalDate, - cupoMaximo: int, - estado: EstadoSalida
+
+**Métodos:** + asignarGuia(guia: Guia): void, + asignarVehiculo(vehiculo: Vehiculo): void, + hayCupoDisponible(cantidad: int): boolean, + reservarLugares(cantidad: int): void, + liberarLugares(cantidad: int): void, + cerrarSalida(): void
 
 ## 11. Reserva:
-**Atributos:**
-- numero: long, - fecha: LocalDate, - estado: EstadoReserva, - total: double
-**Métodos:**
-+ agregarPasajero(p: Pasajero): void, + calcularTotal(): double, + registrarPago(monto: double, medio: MedioPago): void, + getTotalAbonado(): double, + getSaldoPendiente(): double, + cancelarReserva(motivo: String): void
+**Atributos:** - numero: long, - fecha: LocalDate, - estado: EstadoReserva, - total: double
+
+**Métodos:** + agregarPasajero(p: Pasajero): void, + calcularTotal(): double, + registrarPago(monto: double, medio: MedioPago): void, + getTotalAbonado(): double, + getSaldoPendiente(): double, + cancelarReserva(motivo: String): void
 
 ## 12. Pasajero:
-**Atributos:** 
-- nombre: String, - documento: String, - fechaNacimiento: LocalDate, - tipo: TipoPasajero, - contactoEmergencia: String, - restriccionesSalud: String
-**Métodos:**
-+ calcularEdad(fechaRef: LocalDate): int, + getTipo(): TipoPasajero, + getDocumento(): String
+**Atributos:** - nombre: String, - documento: String, - fechaNacimiento: LocalDate, - tipo: TipoPasajero, - contactoEmergencia: String, - restriccionesSalud: String
+
+**Métodos:** + calcularEdad(fechaRef: LocalDate): int, + getTipo(): TipoPasajero, + getDocumento(): String
 
 ## 13. ServicioAdicional:
-**Atributos:** 
-- nombre: String, - precio: double, - obligatorio: boolean
-**Métodos:**
-+ getPrecio(): double, + isObligatorio(): boolean
+**Atributos:** - nombre: String, - precio: double, - obligatorio: boolean
+
+**Métodos:** + getPrecio(): double, + isObligatorio(): boolean
   
 ## 14. Pago:
-**Atributos:**
-- idTransaccion: String, - fecha: LocalDate, - importe: double, - medio: MedioPago
-**Métodos**
-+ getImporte(): double, + getMedio(): MedioPago
+**Atributos:** - idTransaccion: String, - fecha: LocalDate, - importe: double, - medio: MedioPago
+
+**Métodos** + getImporte(): double, + getMedio(): MedioPago
 
 # RELACIONES Y MULTIPLICIDADES
 
