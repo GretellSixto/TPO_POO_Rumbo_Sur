@@ -16,6 +16,9 @@ public class Cliente extends Persona {
     public String getEmail() { return email; }
     public String getPaisResidencia() { return paisResidencia; }
 
+    public String getNombreCompleto() {
+        return nombre + " " + apellido;
+    }
 
     @Override
     public String getDescripcionRol() {
