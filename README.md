@@ -4,7 +4,7 @@
 
 ---
 
-## 📌 Descripción del Sistema
+## DESCRIPCION DEL SISTEMA
 Aplicación orientada a objetos desarrollada en Java para la gestión integral de tours, salidas programadas, reservas de pasajeros, cobro de señas y saldos, y cálculo automatizado de reintegros por cancelación para la agencia de turismo receptivo «Rumbo Sur».
 
 El sistema implementa:
@@ -17,22 +17,22 @@ El sistema implementa:
 
 ---
 
-## 💻 Requisitos del Entorno
+## RREQUISITOS DEL ENTORNO
 * **Lenguaje:** Java SE 17 o superior (compatible con OpenJDK 21/26).
 * **IDE recomendado:** IntelliJ IDEA / Eclipse.
 * **Testing:** JUnit 5 (Jupyter).
 
 ---
 
-## 🚀 Instrucciones de Ejecución
+## INSTRUCCIONES DE EJECUCION
 
-### Opción 1: Desde IntelliJ IDEA
-1. Abrir IntelliJ IDEA y seleccionar **File > Open**, eligiendo la carpeta del proyecto.
+### 1: Desde IntelliJ IDEA
+1. Abrir IntelliJ y seleccionar **File > Open**, eligiendo la carpeta del proyecto.
 2. Asegurar que el SDK del proyecto esté en Java 17 o superior en **File > Project Structure > Project**.
 3. Navegar a `src/com/rumbosur/app/Main.java`.
 4. Hacer clic derecho sobre `Main.java` y seleccionar **Run 'Main.main()'**.
 5. Seguir el menú interactivo en la consola inferior.
 
-### Opción 2: Ejecución de Pruebas Unitarias
+### 2: Ejecución de Pruebas Unitarias
 1. Navegar a `test/com/rumbosur/test/ReservaTest.java`.
 2. Hacer clic derecho y seleccionar **Run 'ReservaTest'** para verificar la suite de tests automatizados (validación de aptitud y seña del 30%).
