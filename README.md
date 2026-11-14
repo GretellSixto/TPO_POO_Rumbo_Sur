@@ -1,22 +1,38 @@
-# Trabajo Práctico Obligatorio - Agencia de Turismo «Rumbo Sur»
-## Etapa 1: Modelado y Aplicación de Patrones
-- **Curso:** Paradigma Orientado a Objetos
-- **Caso:** Propuesta B - Agencia de Turismo Rumbo Sur
+# Sistema de Gestión de Agencia de Turismo «Rumbo Sur»
+**Trabajo Práctico Obligatorio - Programación Orientada a Objetos**  
+**Alumna:** Gretell Sixto | **Docente:** María Ángela León | **Año:** 2026  
 
 ---
 
-### Integrantes del Grupo
-- Gretell Virginia Sixto Calderón (Legajo: 1202890)
+## 📌 Descripción del Sistema
+Aplicación orientada a objetos desarrollada en Java para la gestión integral de tours, salidas programadas, reservas de pasajeros, cobro de señas y saldos, y cálculo automatizado de reintegros por cancelación para la agencia de turismo receptivo «Rumbo Sur».
+
+El sistema implementa:
+* **Jerarquía polimórfica de tours:** `Tour` (abstracta), `TourAventura`, `TourCultural` y `TourNaturaleza`, sobreescribiendo la validación de aptitud de pasajeros (`validarAptitud`).
+* **Patrones GRASP:** Experto en Información (`CalculadoraPrecios`, `Pasajero`), Creador (`Reserva`), Controlador (`ControladorReserva`) y Variaciones Protegidas.
+* **Principios SOLID:** Responsabilidad Única (SRP), Abierto/Cerrado (OCP con patrón *Strategy* para promociones) y Sustitución de Liskov (LSP).
+* **Colecciones y ordenamiento:** `Comparable` para orden natural cronológico de salidas y `Comparator` para orden personalizado por plazas disponibles.
+* **Excepciones de negocio:** `CupoExcedidoException` y `PasajeroNoAptoException` con bloques `try-catch-finally`.
+* **Persistencia I/O:** Almacenamiento y lectura de reservas en archivo de texto (`reservas_registradas.txt`).
 
 ---
 
-### Estructura del Repositorio
-- `/docs/`: Análisis de enunciado, actores, requerimientos funcionales, reglas de negocio, supuestos y justificación de patrones.
-- `/docs/uml/`: Archivos fuente PlantUML (.puml) e imágenes exportadas de los diagramas.
-- `/src/`: Implementación del modelo de dominio en Java 17+.
-- `/test/`: Batería de pruebas unitarias JUnit 5 que validan las reglas de negocio clave.
+## 💻 Requisitos del Entorno
+* **Lenguaje:** Java SE 17 o superior (compatible con OpenJDK 21/26).
+* **IDE recomendado:** IntelliJ IDEA / Eclipse.
+* **Testing:** JUnit 5 (Jupyter).
 
 ---
 
-### Entregas y Tags
-- **Etapa 1:** Tag `etapa-1`
+## 🚀 Instrucciones de Ejecución
+
+### Opción 1: Desde IntelliJ IDEA
+1. Abrir IntelliJ IDEA y seleccionar **File > Open**, eligiendo la carpeta del proyecto.
+2. Asegurar que el SDK del proyecto esté en Java 17 o superior en **File > Project Structure > Project**.
+3. Navegar a `src/com/rumbosur/app/Main.java`.
+4. Hacer clic derecho sobre `Main.java` y seleccionar **Run 'Main.main()'**.
+5. Seguir el menú interactivo en la consola inferior.
+
+### Opción 2: Ejecución de Pruebas Unitarias
+1. Navegar a `test/com/rumbosur/test/ReservaTest.java`.
+2. Hacer clic derecho y seleccionar **Run 'ReservaTest'** para verificar la suite de tests automatizados (validación de aptitud y seña del 30%).
